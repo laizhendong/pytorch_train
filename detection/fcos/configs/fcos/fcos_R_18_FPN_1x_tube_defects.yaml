@@ -1,0 +1,51 @@
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  #WEIGHT: "catalog://ImageNetPretrained/MSRA/R-50"
+  WEIGHT: "pretrained/resnet18-5c106cde.pth"
+  RPN_ONLY: True
+  FCOS_ON: True
+  BACKBONE:
+    #STRIDE_IN_1X1: False
+    CONV_BODY: "R-18-FPN-RETINANET"
+  RESNETS:
+    TRANS_FUNC: "BasicBlockWithFixedBatchNorm" #
+    RES2_OUT_CHANNELS: 64 #resnet18
+    BACKBONE_OUT_CHANNELS: 64
+  RETINANET:
+    USE_C5: False # FCOS uses P5 instead of C5
+    NUM_CLASSES: 6
+  FCOS:
+    NUM_CLASSES: 6 # include background
+  ROI_BOX_HEAD:
+    NUM_CLASSES: 6
+DATASETS:
+  TRAIN: ("tubedft_2007_train",)
+  TEST: ("tubedft_2007_test",)
+INPUT:
+  MIN_SIZE_TRAIN: (512,768,960,1024)
+  MAX_SIZE_TRAIN: 1024
+  MIN_SIZE_TEST: 1024
+  MAX_SIZE_TEST: 1024
+  #PIXEL_MEAN: [0.408, 0.447, 0.470]
+  #PIXEL_STD: [0.289, 0.274, 0.278]
+  #TO_BGR255: False  
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+SOLVER:
+  BASE_LR: 0.001
+  WEIGHT_DECAY: 0.0001
+  #STEPS: (60000, 80000)
+  #MAX_ITER: 90000
+  STEPS: (120000,180000)
+  MAX_ITER: 240000
+  IMS_PER_BATCH: 4
+  WARMUP_METHOD: "constant"
+TEST:
+  DETECTIONS_PER_IMG: 100
+  BBOX_AUG:
+    ENABLED: False
+    H_FLIP: True
+    SCALES: (400, 500, 600, 700, 900, 1000, 1100, 1200)
+    MAX_SIZE: 2000
+    SCALE_H_FLIP: True
+OUTPUT_DIR: "train_out"

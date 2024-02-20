@@ -1,0 +1,46 @@
+MODEL:
+  META_ARCHITECTURE: "GeneralizedRCNN"
+  WEIGHT: "catalog://ImageNetPretrained/MSRA/R-50"
+  RPN_ONLY: True
+  FCOS_ON: True
+  BACKBONE:
+    CONV_BODY: "R-50-FPN-RETINANET"
+  RESNETS:
+    BACKBONE_OUT_CHANNELS: 256
+  RETINANET:
+    USE_C5: False # FCOS uses P5 instead of C5 !!!!!!!! 
+    NUM_CLASSES: 5
+  FCOS:
+    NUM_CLASSES: 5 # include background
+  ROI_BOX_HEAD:
+    NUM_CLASSES: 5
+DATASETS:
+  TRAIN: ("robbintopborder_2007_train","robbintopborder_2012_train",)
+  TEST: ("robbintopborder_2007_test",)
+INPUT:
+  MIN_SIZE_TRAIN: (448,512,704,736)
+  MAX_SIZE_TRAIN: 960
+  MIN_SIZE_TEST: 512
+  MAX_SIZE_TEST: 960
+  #PIXEL_MEAN: [0.408, 0.447, 0.470]
+  #PIXEL_STD: [0.289, 0.274, 0.278]
+  #TO_BGR255: False  
+DATALOADER:
+  SIZE_DIVISIBILITY: 32
+SOLVER:
+  BASE_LR: 0.001
+  WEIGHT_DECAY: 0.0001
+  STEPS: (60000, 80000)
+  MAX_ITER: 90000
+  #STEPS: (120000,180000)
+  #MAX_ITER: 240000
+  IMS_PER_BATCH: 4
+  WARMUP_METHOD: "constant"
+TEST:
+  BBOX_AUG:
+    ENABLED: False
+    H_FLIP: True
+    SCALES: (448,512)
+    MAX_SIZE: 2592
+    SCALE_H_FLIP: True
+OUTPUT_DIR: "train_out"
