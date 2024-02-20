@@ -1,0 +1,42 @@
+MODEL:
+    BACKBONE_NAME: "RepVGG-A0" # RepVGG-A0 resnet18 resnet50 alexnet 
+    WEIGHTS: "RepVGG-A0-train.pth" # RepVGG-A0-train   resnet18-5c106cde  resnet50-19c8e357 alexnet-owt-7be5be79
+    USE_IMAGENET_BACKBONE: False
+############################################
+#Dataset
+DATA:
+    SRC_DIR: "/home_disk2/caffe/dty/sideBottomCenter_tailExtraRefine/data"
+    TRAIN_LIST: "../data/trainval_20210817.txt" # trainval_20210721_new 
+    TEST_LIST: "../data/testset_20210806.txt" # testset_20210806
+    NAME: "classical_classifier" # classical_classifier
+    CLASSES_BALANCED: False
+    MEAN: (0.0, 0.0, 0.0)
+    STD: (1.0, 1.0, 1.0)
+    AUGMENT:
+        ROTATION: 0.0
+        RandomBrightness: 30.0 
+        RandomContrast : [0.7, 1.4]
+        HFLIP: True
+        VFLIP: False
+        SHUFFLE_COLOR: False
+        BLUR: 4
+       
+SOLVER:
+    DEVICE: 2
+    LR_BASE: 0.001
+    LR_POLICY: "cosine"
+    GRADIENT_MAX: -1
+    STEP: 10
+    EPOCHS: 30
+    BATCH_SIZE: 80
+    OUTPUT_FOLDER: "output/repvgg_20210827_consine"
+
+############################################
+#ONNX
+ONNX:
+    INPUT_SHAPE: [1, 3, 112, 112]
+    PTH_NAME: './output/repvgg_20210826_resize_crop/epoch22_converted.pth'  
+    ONNX_NAME: 'epoch22_converted.onnx'  # 
+    INPUT_NAME: ['data']
+    OUTPUT_NAME: ['prob']
+    DYNAMIC_SHAPE: True
