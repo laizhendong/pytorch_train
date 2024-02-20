@@ -1,0 +1,12 @@
+{
+  "aug": {
+        "input_dir": "..\\DEL\\VOC2007\\",
+        "output_dir": "..\\DEL\\VOC2012\\",
+        "": "小于min_size的将扩展到min_size,但油污要计算面积，不适合做很大扩展",
+        "min_size": 8,
+        "zoom": 1,
+        "mosaic": 1,
+        "paste_target":0,
+        "rotation": 1
+    }
+}
