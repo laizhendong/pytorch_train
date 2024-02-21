@@ -1,0 +1,1 @@
+python detect.py --weights 'weights/yolov5s_bansi_obb_old_refine.onnx' --source 'dataset/test_bansi/' --img 1024 --device 2  --name bansi_old_refine_onnx

@@ -1,0 +1,1 @@
+python export.py --weights ./weights/yolov5s_bansi_obb.pt --img 1024 --batch 1
