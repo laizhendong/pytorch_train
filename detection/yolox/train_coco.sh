@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES="0" python tools/train.py -f exps/example/custom/yolox_s.py -expn fewshot -d 1 -b 1 --fp16 -o -c ./weights/yolox_s.pth.tar

@@ -1,0 +1,1 @@
+python3 ./demo/ONNXRuntime/onnx_inference.py -m ./onnx_models/oilstain/yolox_s_oilstain.onnx -i assets/2.jpg -o ./inference/oilstain -s 0.1 --input_shape 1024,1024

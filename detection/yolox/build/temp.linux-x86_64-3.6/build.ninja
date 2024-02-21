@@ -1,0 +1,21 @@
+ninja_required_version = 1.3
+cxx = c++
+
+cflags = -pthread -B /opt/conda/compiler_compat -Wl,--sysroot=/ -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/data1/LZD/YOLOV5/YOLOX/yolox/layers/csrc -I/opt/conda/lib/python3.6/site-packages/torch/include -I/opt/conda/lib/python3.6/site-packages/torch/include/torch/csrc/api/include -I/opt/conda/lib/python3.6/site-packages/torch/include/TH -I/opt/conda/lib/python3.6/site-packages/torch/include/THC -I/opt/conda/include/python3.6m -c
+post_cflags = -O3 -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=_C -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++14
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+
+
+build /data1/LZD/YOLOV5/YOLOX/build/temp.linux-x86_64-3.6/data1/LZD/YOLOV5/YOLOX/yolox/layers/csrc/vision.o: compile /data1/LZD/YOLOV5/YOLOX/yolox/layers/csrc/vision.cpp
+build /data1/LZD/YOLOV5/YOLOX/build/temp.linux-x86_64-3.6/data1/LZD/YOLOV5/YOLOX/yolox/layers/csrc/cocoeval/cocoeval.o: compile /data1/LZD/YOLOV5/YOLOX/yolox/layers/csrc/cocoeval/cocoeval.cpp
+
+
+
+
+
